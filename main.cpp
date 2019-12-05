@@ -106,12 +106,15 @@ void Gross (Employees &E){
     holder = E.hours * E.pay;
     E.gross = holder + E.doublepay;
 }
+// This Function calculates the deductions of the employees
 void Deductions (Employees &E){
     E.deductions = (E.gross * 0.18);
 }
+// This Function calculates the net payment of the employees
 void Net (Employees &E){
     E.net = E.gross - E.deductions;
 }
+// This Function is an accumulator for the total of the roster
 void Total (Employees E, double &total){
     total = total + E.gross;
 }
@@ -176,8 +179,6 @@ void Ssort (Employees E1[], int size){
                 minInd = i;
                 swap(E1[minInd],E1[start]);
             }
-            //E1[minInd] = E1[start];
-            //E1[start] = min;
         }
     }
 }
@@ -196,17 +197,21 @@ void Menu (char &selection){
     cout << "\n Please, enter the character of yore choice: ";
     cin >> selection;
 }
+// This function ask the user if he or she wants to repeat the program
 void Repeat (string &repeat){
     cout << "\n Do you want to input another file ( If so please enter yes) ";
     cin >> repeat;
 }
+// This is were the program starts
 int main(){
+    //Here we are declaring the variables that our program is going to use
     string file,Nomina;
     Employees* E1 = nullptr;
     int i = 0, size,find;
     char Selection;
     string repeat;
     double total =0;
+    // This is the body of the whole program.
     do {
         File(file,size);
         E1 = new Employees [size];
@@ -226,6 +231,7 @@ int main(){
             i++;
         }
         Total_N(nominaf, total);
+        // Here we call the Menu function and execute the correct functions based on the user selection
         Menu(Selection);
         if ( Selection == 'a' || Selection == 'A'){
             Repeat(repeat);
@@ -235,7 +241,8 @@ int main(){
             if (find == -1){
                 cout << "\n The name you're looking for isn't in this file\n ";
                 system("pause");
-            } else {
+            }
+            else {
                 Layout(nominaf, Nomina);
                 Display(nominaf, E1[find]);
                 Total_N(nominaf,total);
@@ -243,7 +250,6 @@ int main(){
             }
         }
         else if ( Selection == 'c'|| Selection == 'C'){
-            // Here should lie the code for the sort algorithm.
             Ssort(E1,i);
             Layout(nominaf, Nomina);
             int t = 0;
@@ -256,6 +262,7 @@ int main(){
         else if(Selection == 'd'|| Selection == 'D') {
             return 0;
         }
+        // here we restore some values so that when we re-run the program it wont cause any trouble.
         nominaf.close();
         i = 0;
         total = 0;
